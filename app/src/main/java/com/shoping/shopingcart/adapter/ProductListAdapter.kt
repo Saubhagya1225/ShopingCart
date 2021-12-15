@@ -1,6 +1,7 @@
 package com.shoping.shopingcart.adapter
 
 import android.content.Context
+import android.icu.number.NumberFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.shoping.shopingcart.R
 import com.shoping.shopingcart.model.Products
 import com.shoping.shopingcart.util.OnItemClick
-import com.squareup.picasso.Picasso
 import java.util.*
 
 class ProductListAdapter(var productList: ArrayList<Products>, val itemClick: OnItemClick):
@@ -29,9 +30,16 @@ class ProductListAdapter(var productList: ArrayList<Products>, val itemClick: On
         fun bind(products: Products) {
             productname.text = products.name
             productTitle.text = products.price
-            Picasso.with(productImg.context).load(products.image_url)
-                .fit().centerCrop()
+
+            Glide.with(productImg.context)
+                .load(products.image_url)
                 .into(productImg);
+
+            /*Picasso.with(productImg.context).load(products.image_url)
+                .fit().centerCrop()
+                .into(productImg);*/
+
+
            // tvBalance.text = accountsItem.balance.toString()
         }
 

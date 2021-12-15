@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.shoping.shopingcart.network.ProductHelper
 import com.shoping.shopingcart.network.ProductService
 import com.shoping.shopingcart.network.ViewModelFactory
 import com.shoping.shopingcart.util.OnItemClick
+import com.shoping.shopingcart.util.SharedPreferenceUtil
 import com.shoping.shopingcart.util.Status
 import com.shoping.shopingcart.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -50,6 +52,11 @@ class MainActivity : AppCompatActivity(), OnItemClick {
                 this,
                 ViewModelFactory(ProductHelper(ProductService.apiService))
         ).get(ProductViewModel::class.java)
+       /* viewModelDBViewModal =  ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        ).get(ProductDBViewModal::class.java)
+*/
 
         productViewModel.getProductList().observe(this, Observer {
             it.let { resource ->
@@ -78,8 +85,15 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
 
     override fun onItemClickListner(products: Products) {
+
+        SharedPreferenceUtil.productAddToCart(products, applicationContext)
+        var arrayList = SharedPreferenceUtil.getProductList(this.applicationContext)
+
         textViewCount.visibility = View.VISIBLE
-        textViewCount.text
+        textViewCount.text = arrayList.size.toString()
+
+        Toast.makeText(this, arrayList.size.toString(), Toast.LENGTH_LONG).show()
+
 
     }
 }

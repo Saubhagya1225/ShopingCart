@@ -4,12 +4,13 @@ import android.content.Context
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.shoping.shopingcart.model.Products
 
 class SharedPreferenceUtil {
-   /* companion object {
+    companion object {
         val PREF_NAME: String = SharedPreferenceUtil::class.java.name
         val KEY: String = "CartProducts"
-        fun saveArrayList(list: ArrayList<Product>, context: Context) {
+        fun saveProductList(list: ArrayList<Products>, context: Context) {
             val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             val editor = prefs.edit()
             val gson = Gson()
@@ -18,15 +19,15 @@ class SharedPreferenceUtil {
             editor.apply()     // This line is IMPORTANT !!!
         }
 
-        fun getArrayList(context: Context): ArrayList<Product> {
+        fun getProductList(context: Context): ArrayList<Products> {
             val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             val gson = Gson()
             val json = prefs.getString(KEY, null)
-            val type = object : TypeToken<ArrayList<Product>>() {}.getType()
+            val type = object : TypeToken<ArrayList<Products>>() {}.getType()
             if (json != null) {
                 return gson.fromJson(json, type)
             } else {
-                return ArrayList<Product>();
+                return ArrayList<Products>();
             }
         }
 
@@ -35,8 +36,14 @@ class SharedPreferenceUtil {
             var editor = prefs.edit().clear().commit()
         }
 
-        fun productSaveAndExists(newProduct: Product, context: Context) {
-            var arrayList = getArrayList(context)
+        fun productAddToCart(newProduct: Products, context: Context) {
+
+            var favorites: ArrayList<Products> = getProductList(context)
+            if (favorites == null) favorites = ArrayList<Products>()
+            favorites.add(newProduct)
+            saveProductList( favorites, context)
+
+           /* var arrayList = getArrayList(context)
             var isFound = false
             for (item in arrayList) {
                 if (item.id == newProduct.id) {
@@ -50,7 +57,7 @@ class SharedPreferenceUtil {
                 arrayList.add(newProduct)
             }
 
-            saveArrayList(arrayList, context)
+            saveArrayList(arrayList, context)*/
         }
-    }*/
+    }
 }

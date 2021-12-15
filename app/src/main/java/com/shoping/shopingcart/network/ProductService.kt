@@ -2,7 +2,6 @@ package com.shoping.shopingcart.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 object ProductService {
     private val BASE_URL = "https://my-json-server.typicode.com/"
 
