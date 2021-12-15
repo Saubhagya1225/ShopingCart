@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), OnItemClick {
     fun cartCount() {
         val arrayList = SharedPreferenceUtil.getProductList(this.applicationContext)
         if (arrayList.isNullOrEmpty()) {
-            textViewCount.visibility = View.VISIBLE
+            textViewCount.visibility = View.INVISIBLE
         } else {
             textViewCount.visibility = View.VISIBLE
             textViewCount.text = arrayList.size.toString()
