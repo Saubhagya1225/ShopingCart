@@ -20,11 +20,17 @@ class CartDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart_details)
 
+
+        /*
+        get The Product list from local storage
+        * */
+
         val arrayList = SharedPreferenceUtil.getProductList(this.applicationContext)
         if (arrayList.isNullOrEmpty()) {
             emptyMessage.visibility = View.VISIBLE
             checkoutView.visibility = View.INVISIBLE
         }
+
         checkoutAdapter = CheckoutAdapter(arrayList)
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager

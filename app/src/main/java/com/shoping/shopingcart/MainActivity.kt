@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         setContentView(R.layout.activity_main)
 
         progress_bar.visibility = View.VISIBLE
+
         adapter = ProductListAdapter(arrayListOf(), this)
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
@@ -56,6 +57,18 @@ class MainActivity : AppCompatActivity(), OnItemClick {
             startActivity(intent)
         }
 
+        getTheProductList()
+
+
+
+    }
+
+
+
+    /*
+    fetching product list from viewmodel
+    * */
+    private fun getTheProductList() {
         productViewModel.getProductList().observe(this, Observer {
             it.let { resource ->
                 when (resource.status) {
@@ -79,7 +92,6 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
             }
         })
-
     }
 
 
@@ -92,6 +104,7 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
     }
 
+    //maintaining cart count
     fun cartCount() {
         val arrayList = SharedPreferenceUtil.getProductList(this.applicationContext)
         if (arrayList.isNullOrEmpty()) {
